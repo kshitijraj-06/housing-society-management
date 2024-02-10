@@ -1,0 +1,119 @@
+{
+  "project_info": {
+    "project_number": "863763827789",
+    "firebase_url": "https://spring-valley-e2a8f-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "spring-valley-e2a8f",
+    "storage_bucket": "spring-valley-e2a8f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:863763827789:android:5c1162e34be1a7f468e004",
+        "android_client_info": {
+          "package_name": "com.example.spring_valley_phase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "863763827789-chh1ibnqfb2qvuqd59qj0gnus7gq31n0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNmqb4j8VAxwGITw-RuTbk00paKUJE5Hc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "863763827789-chh1ibnqfb2qvuqd59qj0gnus7gq31n0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "863763827789-22nauhal4rjt98f90svpskcug8un1c39.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.housingsociety"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:863763827789:android:3a335ca41664d4ef68e004",
+        "android_client_info": {
+          "package_name": "com.spvalley.spv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "863763827789-chh1ibnqfb2qvuqd59qj0gnus7gq31n0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNmqb4j8VAxwGITw-RuTbk00paKUJE5Hc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "863763827789-chh1ibnqfb2qvuqd59qj0gnus7gq31n0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "863763827789-22nauhal4rjt98f90svpskcug8un1c39.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.housingsociety"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:863763827789:android:af12503e57db231f68e004",
+        "android_client_info": {
+          "package_name": "com.spvalley.spvalley"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "863763827789-chh1ibnqfb2qvuqd59qj0gnus7gq31n0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNmqb4j8VAxwGITw-RuTbk00paKUJE5Hc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "863763827789-chh1ibnqfb2qvuqd59qj0gnus7gq31n0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "863763827789-22nauhal4rjt98f90svpskcug8un1c39.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.housingsociety"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
