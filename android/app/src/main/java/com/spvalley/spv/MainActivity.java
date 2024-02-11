@@ -1,4 +1,6 @@
 package com.spvalley.spv;
 
-public class MainActivity extends FlutterFragmentActivity {
+import io.flutter.embedding.android.FlutterActivity;
+
+public class MainActivity extends FlutterActivity{
 }

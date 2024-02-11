@@ -62,7 +62,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Row(
                   children: [
                     EaseInAnimation(
-                      duration: Duration(seconds: 2),
+                      duration: const Duration(seconds: 2),
                       child: IconButton(
                         icon: const Icon(
                           Icons.arrow_back,
@@ -71,15 +71,15 @@ class _ProfilePageState extends State<ProfilePage> {
                         onPressed: () => Navigator.pop(context),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 272,
                     ),
                   ],
                 ),
               ),
-              EaseInAnimation(
+              const EaseInAnimation(
                 duration: Duration(seconds: 2),
-                child: const Padding(
+                child: Padding(
                   padding: EdgeInsets.only(top: 20, left: 14),
                   child: Row(
                     children: [
@@ -93,7 +93,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
               ),
-              SizedBox(height: 60,),
+              const SizedBox(height: 60,),
               FastOutSlowInAnimation(
                 duration: const Duration(seconds: 3),
                 scale: 0.5,
@@ -107,7 +107,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               const SizedBox(height:60),
               EaseInAnimation(
-                  duration: Duration(seconds: 2),
+                  duration: const Duration(seconds: 2),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 16.0),
                   child: Text(
@@ -123,7 +123,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               const SizedBox(height: 3),
               EaseInAnimation(
-                duration: Duration(seconds: 2),
+                duration: const Duration(seconds: 2),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 16.0),
                   child: Text(
@@ -139,7 +139,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               const SizedBox(height: 3),
               EaseInAnimation(
-                duration: Duration(seconds: 2),
+                duration: const Duration(seconds: 2),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 16.0),
                   child: Text(
@@ -155,7 +155,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               const SizedBox(height: 3),
               EaseInAnimation(
-                duration: Duration(seconds: 2),
+                duration: const Duration(seconds: 2),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 16.0),
                   child: Text(
@@ -172,7 +172,7 @@ class _ProfilePageState extends State<ProfilePage> {
               const SizedBox(height: 3),
               // Additional profile information sections
               EaseInAnimation(
-                duration: Duration(seconds: 2),
+                duration: const Duration(seconds: 2),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 16.0),
                   child: Text(

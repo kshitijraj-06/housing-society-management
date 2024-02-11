@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:loading_animations/loading_animations.dart';
 import 'package:spv/pages/notice.dart';
 import 'package:spv/pages/social.dart';
+import 'package:spv/pages/society_payment.dart';
 import 'helpdesk.dart';
 import 'profile_page.dart';
 import 'package:animated_flutter_widgets/animated_widgets.dart';
@@ -47,194 +48,198 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _isLoading ? _buildLoadingIndicator() : SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.only(top: 65, left: 16),
-              child: Row(
+      body: _isLoading
+          ? _buildLoadingIndicator()
+          : SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(
-                    Icons.notifications,
-                    size: 30,
-                    color: Colors.grey,
+                  Padding(
+                    padding: EdgeInsets.only(top: 65, left: 16),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.notifications,
+                          size: 30,
+                          color: Colors.grey,
+                        ),
+                        SizedBox(width: 35),
+                        EaseInAnimation(
+                          duration: Duration(seconds: 1),
+                          child: Text(
+                            'Spring Valley Phase - 1',
+                            style: TextStyle(
+                              fontSize: 23,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 35),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      ProfilePage(user: getCurrentUser())),
+                            );
+                          },
+                          child: CircleAvatar(
+                            radius: 20,
+                            backgroundImage: NetworkImage(
+                              'https://img.freepik.com/premium-vector/young-smiling-man-holding-pointing-blank-screen-laptop-computer-distance-elearning-education-concept-3d-vector-people-character-illustration-cartoon-minimal-style_365941-927.jpg',
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  SizedBox(width: 35),
-                  EaseInAnimation(
-                    duration: Duration(seconds: 1),
-                    child: Text(
-                      'Spring Valley Phase - 1',
-                      style: TextStyle(
-                        fontSize: 23,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 18),
+                    child: EaseInAnimation(
+                      duration: Duration(seconds: 1),
+                      child: Text(
+                        'Pre - Approve Visitors',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                   ),
-                  SizedBox(width: 35),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ProfilePage(user: getCurrentUser())),
-                      );
-                    },
-                    child: CircleAvatar(
-                      radius: 20,
-                      backgroundImage: NetworkImage(
-                        'https://img.freepik.com/premium-vector/young-smiling-man-holding-pointing-blank-screen-laptop-computer-distance-elearning-education-concept-3d-vector-people-character-illustration-cartoon-minimal-style_365941-927.jpg',
+                  const SizedBox(
+                    height: 13,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 18),
+                    child: EaseInAnimation(
+                      duration: Duration(seconds: 1),
+                      child: Text(
+                        'Add Visitors Details for Quick Entries.',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                      height:
+                          16), // Add spacing between the text and the card items
+                  SizedBox(
+                    height: 150, // Adjust the height as needed
+                    child: EaseInAnimation(
+                      duration: Duration(seconds: 1),
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          _buildClickableCard(
+                            'Add Guests',
+                            Icons.people,
+                            Colors.blue,
+                            () {
+                              // Handle click for Add Guests
+                              if (kDebugMode) {
+                                print('Add Guests Clicked');
+                              }
+                            },
+                          ),
+                          _buildClickableCard(
+                            'Add Delivery',
+                            Icons.local_shipping,
+                            Colors.green,
+                            () {
+                              // Handle click for Add Delivery
+                              if (kDebugMode) {
+                                print('Add Delivery Clicked');
+                              }
+                            },
+                          ),
+                          _buildClickableCard(
+                            'Add Service',
+                            Icons.build,
+                            Colors.orange,
+                            () {
+                              // Handle click for Add Service
+                              if (kDebugMode) {
+                                print('Add Service Clicked');
+                              }
+                            },
+                          ),
+                          _buildClickableCard(
+                            'Add Cab',
+                            Icons.directions_car,
+                            Colors.red,
+                            () {
+                              // Handle click for Add Cab
+                              if (kDebugMode) {
+                                print('Add Cab Clicked');
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 18),
+                    child: EaseInAnimation(
+                      duration: Duration(seconds: 1),
+                      child: Text(
+                        'Community',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 18),
+                    child: EaseInAnimation(
+                      duration: Duration(seconds: 1),
+                      child: Text(
+                        'Everything about society management',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.grey,
+                        ),
                       ),
                     ),
                   ),
 
-
+                  Container(
+                    padding: const EdgeInsets.only(bottom: 0),
+                    height: 450, // Set the height explicitly
+                    child: EaseInAnimation(
+                      duration: Duration(seconds: 1),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: 4,
+                        itemBuilder: (context, index) {
+                          return _buildVerticalListItem(
+                              context, index); // Pass context
+                        },
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
-
-            const SizedBox(
-              height: 40,
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 18),
-              child: EaseInAnimation(
-                duration: Duration(seconds: 1),
-                child: Text(
-                  'Pre - Approve Visitors',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 13,
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 18),
-              child: EaseInAnimation(
-                duration: Duration(seconds: 1),
-                child: Text(
-                  'Add Visitors Details for Quick Entries.',
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-                height: 16), // Add spacing between the text and the card items
-            SizedBox(
-              height: 150, // Adjust the height as needed
-              child: EaseInAnimation(
-                duration: Duration(seconds: 1),
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    _buildClickableCard(
-                      'Add Guests',
-                      Icons.people,
-                      Colors.blue,
-                      () {
-                        // Handle click for Add Guests
-                        if (kDebugMode) {
-                          print('Add Guests Clicked');
-                        }
-                      },
-                    ),
-                    _buildClickableCard(
-                      'Add Delivery',
-                      Icons.local_shipping,
-                      Colors.green,
-                      () {
-                        // Handle click for Add Delivery
-                        if (kDebugMode) {
-                          print('Add Delivery Clicked');
-                        }
-                      },
-                    ),
-                    _buildClickableCard(
-                      'Add Service',
-                      Icons.build,
-                      Colors.orange,
-                      () {
-                        // Handle click for Add Service
-                        if (kDebugMode) {
-                          print('Add Service Clicked');
-                        }
-                      },
-                    ),
-                    _buildClickableCard(
-                      'Add Cab',
-                      Icons.directions_car,
-                      Colors.red,
-                      () {
-                        // Handle click for Add Cab
-                        if (kDebugMode) {
-                          print('Add Cab Clicked');
-                        }
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 40,
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 18),
-              child: EaseInAnimation(
-                duration: Duration(seconds: 1),
-                child: Text(
-                  'Community',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 18),
-              child: EaseInAnimation(
-                duration: Duration(seconds: 1),
-                child: Text(
-                  'Everything about society management',
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
-            ),
-
-            Container(
-              padding: const EdgeInsets.only(bottom: 0),
-              height: 450, // Set the height explicitly
-              child: EaseInAnimation(
-                duration: Duration(seconds: 1),
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 4,
-                  itemBuilder: (context, index) {
-                    return _buildVerticalListItem(context, index); // Pass context
-                  },
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.black,
@@ -306,7 +311,9 @@ class _DashboardPageState extends State<DashboardPage> {
             );
             break;
           // Add more cases as needed
-
+          case 'Society Payment':
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => SocietyManagement()));
           default:
             if (kDebugMode) {
               print('List Item $index Clicked');
