@@ -14,7 +14,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  String? role;
+  String? type;
   String? block;
   String? flatNumber;
   String? name;
@@ -34,7 +34,7 @@ class _ProfilePageState extends State<ProfilePage> {
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         setState(() {
-          role = documentSnapshot['role'];
+          type = documentSnapshot['type'];
           block = documentSnapshot['block'];
           flatNumber = documentSnapshot['flatNumber'];
           name = documentSnapshot['name'];
@@ -51,6 +51,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -77,7 +78,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ],
                 ),
               ),
-              const EaseInAnimation(
+              EaseInAnimation(
                 duration: Duration(seconds: 2),
                 child: Padding(
                   padding: EdgeInsets.only(top: 20, left: 14),
@@ -86,7 +87,12 @@ class _ProfilePageState extends State<ProfilePage> {
                       Flexible(
                         child: Text(
                           'Profile Page',
-                          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                          style: GoogleFonts.abel(
+                            textStyle: const TextStyle(
+                                fontSize: 35,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w700),
+                          ),
                         ),
                       ),
                     ],
@@ -176,7 +182,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 16.0),
                   child: Text(
-                    'Type: $role',
+                    'Resident Type: $type',
                     style: GoogleFonts.abel(
                       textStyle: const TextStyle(
                           fontSize: 18,

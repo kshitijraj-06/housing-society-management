@@ -8,13 +8,13 @@ import 'package:loading_animations/loading_animations.dart';
 class ComplaintDetailPage extends StatefulWidget {
   final String complaint;
   final String description;
-  final String imageUrl;
+  // final String imageUrl;
 
   const ComplaintDetailPage({
     Key? key,
     required this.complaint,
     required this.description,
-    required this.imageUrl,
+    // required this.imageUrl,
   }) : super(key: key);
 
 
@@ -78,6 +78,7 @@ class _ComplaintDetailPageState extends State<ComplaintDetailPage> {
         }
 
         return Scaffold(
+          backgroundColor: Colors.white,
           body: Padding(
             padding: const EdgeInsets.only(top: 45,
               left: 16,
@@ -109,7 +110,7 @@ class _ComplaintDetailPageState extends State<ComplaintDetailPage> {
                     style: GoogleFonts.abel(
                       textStyle: const TextStyle(
                         letterSpacing: .5,
-                        fontSize: 22,
+                        fontSize: 30,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -123,7 +124,7 @@ class _ComplaintDetailPageState extends State<ComplaintDetailPage> {
                     widget.description,
                     style: GoogleFonts.abel(
                         textStyle: const TextStyle(
-                          fontSize: 18,
+                          fontSize: 22,
                           fontWeight: FontWeight.w700,
                         )),
                   ),
@@ -146,7 +147,7 @@ class _ComplaintDetailPageState extends State<ComplaintDetailPage> {
                           'Raised by: ${snapshot.data}',
                           style: GoogleFonts.abel(
                             textStyle: const TextStyle(
-                                fontSize: 16,
+                                fontSize: 18,
                                 color: Colors.grey,
                                 fontWeight: FontWeight.w700
                             ),
@@ -174,40 +175,40 @@ class _ComplaintDetailPageState extends State<ComplaintDetailPage> {
                 const SizedBox(height: 30),
 
                 
-                FutureBuilder(
-                  future: _getComplaintPhotos(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return _buildLoadingIndicator();
-                    }
-
-                    if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    }
-
-                    List<String> imageUrl = snapshot.data as List<String>;
-                    print(imageUrl);
-
-                    return SizedBox(
-                      height: 100,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: imageUrl.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Image.network(
-                              imageUrl[index],
-                              width: 100,
-                              height: 100,
-                              fit: BoxFit.cover,
-                            ),
-                          );
-                        },
-                      ),
-                    );
-                  },
-                ),
+                // FutureBuilder(
+                //   future: _getComplaintPhotos(),
+                //   builder: (context, snapshot) {
+                //     if (snapshot.connectionState == ConnectionState.waiting) {
+                //       return _buildLoadingIndicator();
+                //     }
+                //
+                //     if (snapshot.hasError) {
+                //       return Text('Error: ${snapshot.error}');
+                //     }
+                //
+                //     List<String> imageUrl = snapshot.data as List<String>;
+                //     print(imageUrl);
+                //
+                //     return SizedBox(
+                //       height: 100,
+                //       child: ListView.builder(
+                //         scrollDirection: Axis.horizontal,
+                //         itemCount: imageUrl.length,
+                //         itemBuilder: (context, index) {
+                //           return Padding(
+                //             padding: const EdgeInsets.all(8.0),
+                //             child: Image.network(
+                //               imageUrl[index],
+                //               width: 100,
+                //               height: 100,
+                //               fit: BoxFit.cover,
+                //             ),
+                //           );
+                //         },
+                //       ),
+                //     );
+                //   },
+                // ),
 
                 const SizedBox(height: 22),
                 Padding(
@@ -329,37 +330,37 @@ class _ComplaintDetailPageState extends State<ComplaintDetailPage> {
     }
   }
 
-  Future<List<String>> _getComplaintPhotos() async {
-    try {
-      // Fetch complaint document from Firestore
-      DocumentSnapshot complaintSnapshot = await FirebaseFirestore.instance
-          .collection('complaints')
-          .doc(widget.complaint)
-
-          .get();
-
-      // Check if the complaint document exists and contains the imageUrl field
-      Map<String, dynamic>? data = complaintSnapshot.data() as Map<String, dynamic>?;
-      if (data != null) {
-        List<dynamic>? imageUrlList = data['imageUrl'] as List<dynamic>?;
-
-        if (imageUrlList != null) {
-          // Convert imageUrlList to a list of strings
-          List<String> imageUrlStrings = imageUrlList.cast<String>().toList();
-          return imageUrlStrings;
-        } else {
-          print('No imageUrl found in the document');
-          return [];
-        }
-      } else {
-        print('Complaint document does not exist or is empty');
-        return [];
-      }
-    } catch (error) {
-      print('Error getting complaint photos: $error');
-      return [];
-    }
-  }
+  // Future<List<String>> _getComplaintPhotos() async {
+  //   try {
+  //     // Fetch complaint document from Firestore
+  //     DocumentSnapshot complaintSnapshot = await FirebaseFirestore.instance
+  //         .collection('complaints')
+  //         .doc(widget.complaint)
+  //
+  //         .get();
+  //
+  //     // Check if the complaint document exists and contains the imageUrl field
+  //     Map<String, dynamic>? data = complaintSnapshot.data() as Map<String, dynamic>?;
+  //     if (data != null) {
+  //       List<dynamic>? imageUrlList = data['imageUrl'] as List<dynamic>?;
+  //
+  //       if (imageUrlList != null) {
+  //         // Convert imageUrlList to a list of strings
+  //         List<String> imageUrlStrings = imageUrlList.cast<String>().toList();
+  //         return imageUrlStrings;
+  //       } else {
+  //         print('No imageUrl found in the document');
+  //         return [];
+  //       }
+  //     } else {
+  //       print('Complaint document does not exist or is empty');
+  //       return [];
+  //     }
+  //   } catch (error) {
+  //     print('Error getting complaint photos: $error');
+  //     return [];
+  //   }
+  // }
 
 
 

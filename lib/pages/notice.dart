@@ -1,20 +1,36 @@
+import 'package:animated_flutter_widgets/animated_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:loading_animations/loading_animations.dart';
 
 import '../notice/notice creation.dart';
 
 class NoticePage extends StatelessWidget {
   const NoticePage({super.key});
 
+  Widget _buildLoadingIndicator() {
+    return Center(
+      child: LoadingFlipping.circle(
+        borderColor: Colors.cyan,
+        borderSize: 3.0,
+        size: 30.0,
+        backgroundColor: Colors.cyanAccent,
+        duration: Duration(milliseconds: 500),
+      ),
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.only(
-          top: 45,
+          top: 65,
           left: 16,
           right: 16,
         ),
@@ -34,15 +50,18 @@ class NoticePage extends StatelessWidget {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 22.0),
-              child: Text(
-                'Notice Board',
-                style: GoogleFonts.abel(
-                  textStyle: const TextStyle(
-                    letterSpacing: .5,
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
+            EaseInAnimation(
+              duration: Duration(seconds: 1),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 22.0),
+                child: Text(
+                  'Notice Board',
+                  style: GoogleFonts.abel(
+                    textStyle: const TextStyle(
+                      letterSpacing: .5,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
@@ -60,9 +79,8 @@ class NoticePage extends StatelessWidget {
                   }
 
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
+                    return _buildLoadingIndicator();
+
                   }
 
                   List<DocumentSnapshot> notices = snapshot.data!.docs;
@@ -84,6 +102,8 @@ class NoticePage extends StatelessWidget {
 
   }
 
+
+
   Widget _buildFloatingActionButton(BuildContext context) {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user = auth.currentUser;
@@ -95,7 +115,7 @@ class NoticePage extends StatelessWidget {
             FirebaseFirestore.instance.collection('users').doc(user.uid).get(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return _buildLoadingIndicator();
           }
 
           // Check if the user has the 'sc' role
@@ -124,110 +144,113 @@ class NoticePage extends StatelessWidget {
 
   Widget _buildnoticesCard(BuildContext context, DocumentSnapshot notices) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.symmetric(vertical: 0),
       child: Card(
         elevation: 3,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
-        child: ListTile(
-          title: Column(
-            children: [
-              Image.asset(
-                'assets/images/ANC.png', // Replace with your asset image path
-                width: 170, // Adjust the width as needed
-                height: 100, // Adjust the height as needed
-              ),
-              const SizedBox(height: 8),
-              Row(
-                children: [
-                  Flexible(
-                    child: Text(
-                      notices['title'],
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 19,
+        child: EaseInAnimation(
+          duration: Duration(seconds: 1),
+          child: ListTile(
+            title: Column(
+              children: [
+                Image.asset(
+                  'assets/images/ANC.png', // Replace with your asset image path
+                  width: 170, // Adjust the width as needed
+                  height: 100, // Adjust the height as needed
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        notices['title'],
+                        style: GoogleFonts.abel(
+                          textStyle: const TextStyle(
+                            letterSpacing: .5,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
+                  ],
+                ),
+              ],
+            ),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 8),
+                Text(
+                  notices['content'],
+                  style: GoogleFonts.abel(
+                    textStyle: const TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ],
-              ),
-            ],
-          ),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 8),
-              Text(
-                notices['content'],
-                style: GoogleFonts.abel(
-                  textStyle: const TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w600,
+                ),
+                const SizedBox(height: 22),
+                const Text(
+                  'Added by: Admin',
+                  style: TextStyle(
+                    fontSize: 12,
                   ),
                 ),
-              ),
-              const SizedBox(height: 22),
-              const Text(
-                'Added by: Admin',
-                style: TextStyle(
-                  fontSize: 12,
+                const SizedBox(
+                  height: 5,
                 ),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Text(
-                _formatTimestamp(notices['timestamp']),
-                style: const TextStyle(
-                  fontSize: 12,
-                ),
-              ),
-              const SizedBox(
-                height: 3,
-              ),
-              Text(
-                _formatTimestamptime(notices['timestamp']),
-                style: const TextStyle(
-                  fontSize: 12,
-                ),
-              ),
-              const SizedBox(height: 22),
-              Row(
-                children: [
-                  const SizedBox(width: 250),
-                  IconButton(
-                    color: Colors.black,
-                    icon: const Icon(Icons.thumb_up),
-                    onPressed: () {
-                      _updateLikes(notices
-                          .id);
-                    },
+                Text(
+                  _formatTimestamp(notices['timestamp']),
+                  style: const TextStyle(
+                    fontSize: 12,
                   ),
+                ),
+                const SizedBox(
+                  height: 3,
+                ),
+                Text(
+                  _formatTimestamptime(notices['timestamp']),
+                  style: const TextStyle(
+                    fontSize: 12,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    const SizedBox(width: 250),
+                    IconButton(
+                      color: Colors.black,
+                      icon: const Icon(Icons.thumb_up),
+                      onPressed: () {
+                        _updateLikes(notices
+                            .id);
+                      },
+                    ),
 
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    notices['likes'].toString(),
-                    style: GoogleFonts.abel(),
-                  ),
+                    Text(
+                      notices['likes'].toString(),
+                      style: GoogleFonts.abel(),
+                    ),
 
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
+            onTap: () {
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => ComplaintDetailPage(
+              //       complaint: complaint['complaint'],
+              //       description: complaint['description'],
+              //     ),
+              //   ),
+              // );
+            },
           ),
-          onTap: () {
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) => ComplaintDetailPage(
-            //       complaint: complaint['complaint'],
-            //       description: complaint['description'],
-            //     ),
-            //   ),
-            // );
-          },
         ),
       ),
     );
@@ -270,42 +293,6 @@ class NoticePage extends StatelessWidget {
     }
   }
 
-  Future<void> _updateDislikes(String noticeId) async {
-    try {
-      FirebaseAuth auth = FirebaseAuth.instance;
-      User? user = auth.currentUser;
-
-      if (user != null) {
-        // Get the current user's UID
-        String userId = user.uid;
-
-        // Retrieve the user's name from the 'users' collection
-        DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(userId)
-            .get();
-
-        String userName = userSnapshot['name'] ?? 'Unknown User';
-
-        // Update the 'likes' field in the Firestore database for the specific notice
-        await FirebaseFirestore.instance
-            .collection('notices')
-            .doc(noticeId)
-            .update({
-          'dislikes': FieldValue.increment(1),
-          'reactions': FieldValue.arrayUnion([
-            {'userId': userId, 'userName': userName, 'reactionType': 'dislikes'}
-          ]),
-        });
-      } else {
-        // Handle the case where the user is not authenticated
-        print('User not authenticated');
-      }
-    } catch (error) {
-      print('Error updating likes: $error');
-      // Handle error, e.g., show a message to the user
-    }
-  }
 
   String _formatTimestamp(Timestamp timestamp) {
     // Use your desired date format, e.g., 'yyyy-MM-dd HH:mm:ss'

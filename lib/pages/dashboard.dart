@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:loading_animations/loading_animations.dart';
 import 'package:spv/pages/notice.dart';
+import 'package:spv/pages/service.dart';
 import 'package:spv/pages/social.dart';
 import 'package:spv/pages/society_payment.dart';
 import 'helpdesk.dart';
@@ -29,6 +31,7 @@ class _DashboardPageState extends State<DashboardPage> {
   final List<Widget> _children = [
     DashboardPage(),
     SocialPage(),
+    Service(),
   ];
 
   int _currentIndex = 0;
@@ -48,6 +51,7 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: _isLoading
           ? _buildLoadingIndicator()
           : SingleChildScrollView(
@@ -63,19 +67,20 @@ class _DashboardPageState extends State<DashboardPage> {
                           size: 30,
                           color: Colors.grey,
                         ),
-                        SizedBox(width: 35),
+                        SizedBox(width: 30),
                         EaseInAnimation(
                           duration: Duration(seconds: 1),
                           child: Text(
                             'Spring Valley Phase - 1',
-                            style: TextStyle(
-                              fontSize: 23,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                            style: GoogleFonts.abel(
+                              textStyle: const TextStyle(
+                                fontSize:28,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
-                        SizedBox(width: 35),
+                        SizedBox(width: 30),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -86,7 +91,7 @@ class _DashboardPageState extends State<DashboardPage> {
                             );
                           },
                           child: CircleAvatar(
-                            radius: 20,
+                            radius: 25,
                             backgroundImage: NetworkImage(
                               'https://img.freepik.com/premium-vector/young-smiling-man-holding-pointing-blank-screen-laptop-computer-distance-elearning-education-concept-3d-vector-people-character-illustration-cartoon-minimal-style_365941-927.jpg',
                             ),
@@ -99,32 +104,36 @@ class _DashboardPageState extends State<DashboardPage> {
                   const SizedBox(
                     height: 40,
                   ),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.symmetric(horizontal: 18),
                     child: EaseInAnimation(
                       duration: Duration(seconds: 1),
                       child: Text(
                         'Pre - Approve Visitors',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                        style: GoogleFonts.abel(
+                          textStyle: const TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
                     ),
                   ),
                   const SizedBox(
-                    height: 13,
+                    height: 6,
                   ),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.symmetric(horizontal: 18),
                     child: EaseInAnimation(
                       duration: Duration(seconds: 1),
                       child: Text(
                         'Add Visitors Details for Quick Entries.',
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.grey,
+                        style: GoogleFonts.abel(
+                          textStyle: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
                     ),
@@ -148,6 +157,12 @@ class _DashboardPageState extends State<DashboardPage> {
                               if (kDebugMode) {
                                 print('Add Guests Clicked');
                               }
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content:
+                                  Text('Not available right now !!'),
+                                ),
+                              );
                             },
                           ),
                           _buildClickableCard(
@@ -159,6 +174,12 @@ class _DashboardPageState extends State<DashboardPage> {
                               if (kDebugMode) {
                                 print('Add Delivery Clicked');
                               }
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content:
+                                  Text('Not available right now !!'),
+                                ),
+                              );
                             },
                           ),
                           _buildClickableCard(
@@ -170,6 +191,12 @@ class _DashboardPageState extends State<DashboardPage> {
                               if (kDebugMode) {
                                 print('Add Service Clicked');
                               }
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content:
+                                  Text('Not available right now !!'),
+                                ),
+                              );
                             },
                           ),
                           _buildClickableCard(
@@ -181,6 +208,12 @@ class _DashboardPageState extends State<DashboardPage> {
                               if (kDebugMode) {
                                 print('Add Cab Clicked');
                               }
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content:
+                                  Text('Not available right now !!'),
+                                ),
+                              );
                             },
                           ),
                         ],
@@ -190,40 +223,43 @@ class _DashboardPageState extends State<DashboardPage> {
                   const SizedBox(
                     height: 40,
                   ),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.symmetric(horizontal: 18),
                     child: EaseInAnimation(
                       duration: Duration(seconds: 1),
                       child: Text(
                         'Community',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                        style: GoogleFonts.abel(
+                          textStyle: const TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
                     ),
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 6,
                   ),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.symmetric(horizontal: 18),
                     child: EaseInAnimation(
                       duration: Duration(seconds: 1),
                       child: Text(
-                        'Everything about society management',
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.grey,
+                        'Everything for Spring Valley Phase - I',
+                        style: GoogleFonts.abel(
+                          textStyle: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
                     ),
                   ),
 
                   Container(
-                    padding: const EdgeInsets.only(bottom: 0),
-                    height: 450, // Set the height explicitly
+                    padding: const EdgeInsets.only(bottom: 20),
                     child: EaseInAnimation(
                       duration: Duration(seconds: 1),
                       child: ListView.builder(
@@ -289,7 +325,7 @@ class _DashboardPageState extends State<DashboardPage> {
       'https://cdn.vectorstock.com/i/preview-1x/09/51/portrait-confused-anime-boy-with-question-mark-vector-34070951.jpg',
       'https://img.freepik.com/premium-vector/3d-realistic-megaphone-white-background-concept-join-us-job-vacancy-announcement-modern-3d-cartoon-style-design-3d-vector-illustration_145666-1533.jpg?w=2000',
       'https://img.freepik.com/free-vector/bill-receipt-credit-card-3d-illustration-cartoon-drawing-paper-sheet-with-dollar-symbol-credit-card-3d-style-white-background-business-payment-finances-transaction-concept_778687-705.jpg',
-      'https://previews.123rf.com/images/tovovan/tovovan2203/tovovan220300014/182790817-calendar-with-one-day-selected-3d-vector-illustration.jpg',
+      'https://img.freepik.com/premium-vector/calendar-reminder-date-spiral-icon-red-circle-style-simple-calendar-mark-date-holiday-important-day-concepts-vector-illustration-flat-style_165488-4093.jpg',
     ];
 
     double imageSize = 100.0 + (index % 3) * 1.0;
@@ -313,7 +349,16 @@ class _DashboardPageState extends State<DashboardPage> {
           // Add more cases as needed
           case 'Society Payment':
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => SocietyManagement()));
+                MaterialPageRoute(builder: (context) => SocietyPayment())
+            );
+            break;
+          case 'Book Amenities' :
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content:
+                Text('Will be added soon !! '),
+              ),
+            );
           default:
             if (kDebugMode) {
               print('List Item $index Clicked');
@@ -331,17 +376,25 @@ class _DashboardPageState extends State<DashboardPage> {
                 children: [
                   Text(
                     titles[index % titles.length],
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                    style: GoogleFonts.abel(
+                      textStyle: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black,
+                        letterSpacing: 0.3
+                      ),
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     descriptions[index % descriptions.length],
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey,
+                    style: GoogleFonts.abel(
+                      textStyle: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.grey,
+                        letterSpacing: 0.4,
+                      ),
                     ),
                   ),
                 ],

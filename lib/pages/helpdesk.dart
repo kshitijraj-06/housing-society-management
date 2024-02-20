@@ -1,6 +1,8 @@
+import 'package:animated_flutter_widgets/animated_widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:spv/pages/addcomplaint.dart';
 import 'complaint_page.dart';
 
@@ -8,6 +10,7 @@ class HelpDeskPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -22,7 +25,7 @@ class HelpDeskPage extends StatelessWidget {
                   ),
                   onPressed: () => Navigator.pop(context),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 272,
                 ),
                 IconButton(
@@ -34,17 +37,25 @@ class HelpDeskPage extends StatelessWidget {
                         ),
                       );
                     },
-                    icon: Icon(Icons.add))
+                    icon: const Icon(Icons.add))
               ],
             ),
           ),
-          const Padding(
+           Padding(
             padding: EdgeInsets.only(top: 20, left: 29),
             child: Row(
               children: [
-                Text(
-                  'HelpDesk',
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                EaseInAnimation(
+                  duration : Duration(seconds: 1),
+                  child: Text(
+                    'HelpDesk',
+                    style: GoogleFonts.abel(
+                      textStyle: const TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
                 ),
                 SizedBox(width: 190),
                 Icon(Icons.filter_list_outlined),
@@ -100,71 +111,85 @@ class HelpDeskPage extends StatelessWidget {
     }
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Card(
-        elevation: 3,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        child: ListTile(
-          title: Text(
-            complaint['complaint'],
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 25,
+      child: EaseInAnimation(
+        child: Card(
+          elevation: 3,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: ListTile(
+            title: Text(
+              complaint['complaint'],
+              style: GoogleFonts.abel(
+                textStyle: const TextStyle(
+                  letterSpacing: .5,
+                  fontSize: 25,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
             ),
-          ),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 8),
-              Text(
-                complaint['description'],
-                style: TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold,
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 8),
+                Text(
+                  complaint['description'],
+                  style: GoogleFonts.abel(
+                    textStyle: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
                 ),
-              ),
-              SizedBox(height: 22),
-              Text(
-                'Raised by: ${complaint['name']}',
-                style: TextStyle(
-                  fontSize: 15,
+                const SizedBox(height: 22),
+                Text(
+                  'Raised by: ${complaint['name']}',
+                  style: GoogleFonts.abel(
+                    textStyle: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
                 ),
-              ),
-              Text(
-                'Block: ${complaint['block']}',
-                style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.grey,
+                Text(
+                  'Block: ${complaint['block']}',
+                  style: GoogleFonts.abel(
+                    textStyle: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
                 ),
-              ),
-              Text(
-                'Flat Number: ${complaint['flatNumber']}',
-                style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.grey,
+                Text(
+                  'Flat Number: ${complaint['flatNumber']}',
+                  style: GoogleFonts.abel(
+                    textStyle: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
                 ),
-              ),
-              SizedBox(height: 10),
-            ],
-          ),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ComplaintDetailPage(
-                  complaint: complaint['complaint'],
-                  description: complaint['description'],
-                  imageUrl: complaint['imageUrl'],
+                const SizedBox(height: 10),
+              ],
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ComplaintDetailPage(
+                    complaint: complaint['complaint'],
+                    description: complaint['description'],
+                    // imageUrl: complaint['imageUrl'],
+                  ),
                 ),
-              ),
-            );
-          },
-          trailing: Image.asset(
-            imagePath,
-            width: imageSize,
-            height: imageSize,
-            fit: BoxFit.fill,
+              );
+            },
+            trailing: Image.asset(
+              imagePath,
+              width: imageSize,
+              height: imageSize,
+              fit: BoxFit.fill,
+            ),
           ),
         ),
       ),

@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import 'package:like_button/like_button.dart';
+import 'package:loading_animations/loading_animations.dart';
 import 'package:spv/pages/dashboard.dart';
 import 'package:spv/social/group_chat.dart';
 import '../social/post_creation_page.dart';
@@ -70,33 +71,47 @@ class SocialPage extends StatefulWidget {
   _SocialPageState createState() => _SocialPageState();
 }
 
+Widget _buildLoadingIndicator() {
+  return Center(
+    child: LoadingFlipping.circle(
+      borderColor: Colors.cyan,
+      borderSize: 3.0,
+      size: 30.0,
+      backgroundColor: Colors.cyanAccent,
+      duration: Duration(milliseconds: 500),
+    ),
+  );
+}
+
 class _SocialPageState extends State<SocialPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Column(
         children: [
-          const Padding(
+          Padding(
             padding: EdgeInsets.only(top: 65, left: 16),
             child: Row(
               children: <Widget>[
                 Icon(
                   Icons.notifications,
-                  size: 30,
+                  size: 35,
                   color: Colors.grey,
                 ),
-                SizedBox(width: 35),
+                SizedBox(width: 30),
                 Text(
                   'Spring Valley Phase - 1',
-                  style: TextStyle(
-                    fontSize: 23,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                  style: GoogleFonts.abel(
+                    textStyle: const TextStyle(
+                      fontSize:28,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
-                SizedBox(width: 35),
+                SizedBox(width: 30),
                 CircleAvatar(
-                  radius: 20,
+                  radius: 25,
                   backgroundImage: NetworkImage(
                       'https://img.freepik.com/premium-vector/young-smiling-man-holding-pointing-blank-screen-laptop-computer-distance-elearning-education-concept-3d-vector-people-character-illustration-cartoon-minimal-style_365941-927.jpg'), // Replace with your Firebase image URL
                 ),
@@ -111,9 +126,8 @@ class _SocialPageState extends State<SocialPage> {
                   .snapshots(),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
+                  return  _buildLoadingIndicator();
+
                 }
 
                 final posts = snapshot.data?.docs ?? [];
@@ -132,14 +146,6 @@ class _SocialPageState extends State<SocialPage> {
         ],
       ),
       bottomNavigationBar: _buildBottomNavigationBar(context),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => PostCreationPage()));
-        },
-        child: const Icon(Icons.add),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
     );
   }
 }
@@ -635,4 +641,5 @@ class _PostCardState extends State<PostCard> {
 
     return Size(image.width.toDouble(), image.height.toDouble());
   }
+
 }

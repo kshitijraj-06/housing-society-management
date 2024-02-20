@@ -1,8 +1,14 @@
+import 'package:animated_flutter_widgets/animated_widgets.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'dart:math';
 
 import 'package:loading_animations/loading_animations.dart';
+import 'package:spv/pages/profile_page.dart';
+
+import '../pages/society_payment.dart';
 
 class ChatScreen extends StatefulWidget {
   final String currentUserId;
@@ -41,13 +47,51 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Spring Valley Phase - 1'),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-      ),
+      backgroundColor: Colors.white,
       body: Column(
         children: [
+          Padding(
+            padding: const EdgeInsets.only(top:65.0, left: 16),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.notifications,
+                  size: 30,
+                  color: Colors.grey,
+                ),
+                SizedBox(width: 30),
+                EaseInAnimation(
+                  duration: Duration(seconds: 1),
+                  child: Text(
+                    'Spring Valley Phase - 1',
+                    style: GoogleFonts.abel(
+                      textStyle: const TextStyle(
+                        fontSize:28,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 30),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              ProfilePage(user: getCurrentUser())),
+                    );
+                  },
+                  child: CircleAvatar(
+                    radius: 25,
+                    backgroundImage: NetworkImage(
+                      'https://img.freepik.com/premium-vector/young-smiling-man-holding-pointing-blank-screen-laptop-computer-distance-elearning-education-concept-3d-vector-people-character-illustration-cartoon-minimal-style_365941-927.jpg',
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
           Expanded(
             child: StreamBuilder(
               stream: FirebaseFirestore.instance
@@ -210,6 +254,9 @@ class MessageWidget extends StatelessWidget {
       ),
     );
   }
-
+  getCurrentUser() {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    return auth.currentUser;
+  }
 }
 
