@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -46,59 +48,62 @@ class _LoginPageState extends State<LoginPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 25),
-            Image.asset('assets/images/logo.png'),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.0),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 20.0),
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        'Hello,',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
+             SizedBox(height: MediaQuery.of(context).size.height /2000),
+            Image.network('https://firebasestorage.googleapis.com/v0/b/spring-valley-e2a8f.appspot.com/o/items%2FCream%20And%20Purple%20Illustrative%20Travel%20Agency%20Logo.png?alt=media&token=6997d919-6c58-4c6b-9f6d-da8ca435275e'),
+            Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 20.0),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      'Hello,',
+                      textAlign: TextAlign.left,
+                      style: GoogleFonts.montserrat(
+                        textStyle: TextStyle(
                           fontSize: 21.0,
                           color: Colors.grey,
                         ),
-                      ),
+                      )
                     ),
                   ),
-                  SizedBox(height: 5),
-                  Padding(
-                    padding: EdgeInsets.only(left: 20.0),
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        'Sign In Now',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
+                ),
+                SizedBox(height: 5),
+                Padding(
+                  padding: EdgeInsets.only(left: 20.0),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      'Sign In Now',
+                      textAlign: TextAlign.left,
+                      style: GoogleFonts.montserrat(
+                        textStyle: TextStyle(
                           fontSize: 27.0,
                           color: Colors.black,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w600
                         ),
-                      ),
+                      )
                     ),
                   ),
-                  SizedBox(height: 20),
-                  Padding(
-                    padding: EdgeInsets.only(left: 20.0),
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        'Email Address',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontSize: 18.0,
+                ),
+                SizedBox(height: 20),
+                Padding(
+                  padding: EdgeInsets.only(left: 20.0),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      'Email Address',
+                      textAlign: TextAlign.left,
+                      style: GoogleFonts.montserrat(
+                        textStyle: TextStyle(
                           color: Colors.grey,
-                        ),
-                      ),
+                          fontSize: 18
+                        )
+                      )
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
 
             Padding(
@@ -114,17 +119,19 @@ class _LoginPageState extends State<LoginPage> {
             ),
 
             const SizedBox(height: 10),
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(left: 20.0),
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
                   'Password',
                   textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    color: Colors.grey,
-                  ),
+                  style: GoogleFonts.montserrat(
+                      textStyle: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 18
+                      )
+                  )
                 ),
               ),
             ),
@@ -156,14 +163,17 @@ class _LoginPageState extends State<LoginPage> {
                           borderRadius: BorderRadius.circular(13.0)),
                       backgroundColor: Colors.black,
                       foregroundColor: Colors.white),
-                  child: const Text(
+                  child: Text(
                     'Continue',
-                    style: TextStyle(
-                      fontSize: 20.0,
-                    ),
+                    style: GoogleFonts.montserrat(
+                        textStyle: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                        )
+                    )
                   ),
                 )),
-            const SizedBox(height: 90.0),
+            SizedBox(height: MediaQuery.of(context).size.height/50),
             // App developer credit
             const Text('Kshitij Ranjan'),
           ],

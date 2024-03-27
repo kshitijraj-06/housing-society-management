@@ -125,30 +125,30 @@ class _SocietyPaymentState extends State<SocietyPayment> {
             SizedBox(
               height: 30,
             ),
-            Center(
-              child: ElevatedButton.icon(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => InvoiceGenerator()));
-                },
-                icon: Icon(Icons.file_download_outlined),
-                label: Text('Download'),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      Colors.black), // Change background color
-                  foregroundColor: MaterialStateProperty.all<Color>(
-                      Colors.white), // Change text color
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18.0),
-                      // You can adjust the border radius as needed
-                    ),
-                  ),
-                ),
-              ),
-            )
+            // Center(
+            //   child: ElevatedButton.icon(
+            //     onPressed: () {
+            //       Navigator.push(
+            //           context,
+            //           MaterialPageRoute(
+            //               builder: (context) => InvoiceGenerator(selectedMonth: selectedMonth)));
+            //     },
+            //     icon: Icon(Icons.file_download_outlined),
+            //     label: Text('Download'),
+            //     style: ButtonStyle(
+            //       backgroundColor: MaterialStateProperty.all<Color>(
+            //           Colors.black), // Change background color
+            //       foregroundColor: MaterialStateProperty.all<Color>(
+            //           Colors.white), // Change text color
+            //       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            //         RoundedRectangleBorder(
+            //           borderRadius: BorderRadius.circular(18.0),
+            //           // You can adjust the border radius as needed
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // )
           ],
         ),
       ),

@@ -290,7 +290,6 @@ class NoticePage extends StatelessWidget {
     }
   }
 
-
   String _formatTimestamp(Timestamp timestamp) {
     // Use your desired date format, e.g., 'yyyy-MM-dd HH:mm:ss'
     final formattedDate = DateFormat.yMMMd().format(timestamp.toDate());

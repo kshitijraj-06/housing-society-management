@@ -1,3 +1,4 @@
+import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -84,6 +85,8 @@ Widget _buildLoadingIndicator() {
 }
 
 class _SocialPageState extends State<SocialPage> {
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -146,6 +149,7 @@ class _SocialPageState extends State<SocialPage> {
 
 Widget _buildBottomNavigationBar(BuildContext context) {
   String currentUserId = ''; // Initialize with an empty string
+  final NotchBottomBarController _controller = NotchBottomBarController(index: 0);
 
   final user = FirebaseAuth.instance.currentUser;
   if (user != null) {
@@ -185,7 +189,7 @@ Widget _buildBottomNavigationBar(BuildContext context) {
         // Navigate to the post creation page when "Add" is clicked
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const DashboardPage()),
+          MaterialPageRoute(builder: (context) =>  DashboardPage()),
         );
       } else {
         if (index == 1) {

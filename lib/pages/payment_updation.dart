@@ -16,7 +16,7 @@ class SocietyMaintenanceUpdation extends StatefulWidget {
 class _SocietyMaintenanceUpdation extends State<SocietyMaintenanceUpdation> {
   final List<String> months = List.generate(
       12, (index) => DateFormat('MMMM').format(DateTime(2024, index + 1)));
-   List<Map<String, dynamic>> users;
+  List<Map<String, dynamic>> users;
   TextEditingController _InvoiceController = TextEditingController();
   String? selectedUser;
   int _selectedIndex = DateTime.now().month - 1;
@@ -48,7 +48,7 @@ class _SocietyMaintenanceUpdation extends State<SocietyMaintenanceUpdation> {
           print('Document Data: ${doc.data()}');
           return {
             'userId': doc.id,
-            'name': doc['name'],
+            'name': doc['quantity'],
           };
         }).toList();
       });

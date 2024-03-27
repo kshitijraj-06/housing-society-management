@@ -58,6 +58,14 @@ dependencies:
   flutter_pdfview: ^1.3.2
   open_file: ^3.3.2
   responsive_framework: ^1.4.0
+  animated_text_kit: ^4.2.2
+  flutter_easy_animations: ^0.0.2
+  overflow_text_animated: ^0.0.6
+  flutter_snake_navigationbar: ^0.6.1
+  diamond_bottom_bar: ^1.0.0
+  readmore: ^3.0.0
+  flutter_event_calendar: ^1.0.0
+  animated_notch_bottom_bar: ^1.0.3
 
 
 dev_dependencies:

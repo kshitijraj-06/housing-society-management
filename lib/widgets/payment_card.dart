@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:animated_flutter_widgets/animated_widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,24 +7,109 @@ import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:spv/pages/profile_page.dart';
-import 'package:spv/pages/society_payment.dart';
 
-class InvoiceGenerator extends StatefulWidget {
-  final String selectedMonth;
+class PaymentCards extends StatefulWidget {
+  final List<Map<String, dynamic>> paymentData;
+  final Function(String) onMonthSelected;
 
-InvoiceGenerator({super.key, required this.selectedMonth});
+  PaymentCards({required this.paymentData, required this.onMonthSelected});
 
   @override
-  _InvoiceGeneratorState createState() => _InvoiceGeneratorState();
+  State<PaymentCards> createState() => _PaymentCardsState();
 }
 
-class _InvoiceGeneratorState extends State<InvoiceGenerator> {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+class _PaymentCardsState extends State<PaymentCards> {
+  @override
+  Widget build(BuildContext context) {
+    return Flexible(
+      child: ListView.builder(
+        itemCount:
+            (widget.paymentData.length / 2).ceil(), // Calculate number of rows
+        itemBuilder: (context, index) {
+          final startIndex = index * 2;
+          final endIndex = startIndex + 2;
+          return Row(
+            children: widget.paymentData
+                .sublist(
+                    startIndex,
+                    endIndex < widget.paymentData.length
+                        ? endIndex
+                        : widget.paymentData.length)
+                .map((payment) {
+              return Expanded(
+                child: buildPaymentCard(payment),
+              );
+            }).toList(),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget buildPaymentCard(Map<String, dynamic> payment) {
+    final userId = FirebaseAuth.instance.currentUser;
+    final month = payment['month']?.toString() ?? '';
+    final amount = payment['amount']?.toString() ?? '';
+    final invoice = payment['invoice']?.toString() ?? '';
+    final statusMap = {'true': 'Paid', 'false': 'Unpaid'};
+    final statusText = statusMap[payment['status'].toString()] ?? 'Unknown';
+
+    Color bgColor;
+
+    switch (statusText) {
+      case 'Paid':
+        bgColor = Colors.blue;
+        break;
+      default:
+        bgColor = Colors.white;
+    }
+
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: GestureDetector(
+        onTap: () {
+          generateAndOpenInvoice('userId', month);
+        },
+        child: Card(
+          color: bgColor,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '₹ $amount',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                ),
+                SizedBox(height: 20),
+                Text(
+                  month,
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                ),
+                Text(
+                  invoice,
+                  style: TextStyle(fontSize: 13),
+                ),
+                SizedBox(height: 8.0),
+                Container(
+                  padding: const EdgeInsets.all(4.0),
+                  decoration: BoxDecoration(
+                    color: bgColor.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(4.0),
+                  ),
+                ),
+                getStatusWidget(statusText)
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
   Future<void> generateAndOpenInvoice(String userId, String selectedMonth) async {
+    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
     User? user = FirebaseAuth.instance.currentUser;
     userId = user!.uid;
 
@@ -189,101 +273,56 @@ class _InvoiceGeneratorState extends State<InvoiceGenerator> {
     }
   }
 
+  Widget getStatusWidget(String statusText) {
+    Color statusColor;
+    Color bgColor;
+    switch (statusText) {
+      case 'Paid':
+        statusColor = Colors.white;
+        bgColor = Colors.lightBlueAccent;
+        break;
+      default:
+        statusColor = Colors.black;
+        bgColor = Colors.red.shade200;
+    }
+    return Container(
+      padding: const EdgeInsets.all(4.0),
+      decoration: BoxDecoration(
+        color: bgColor.withOpacity(0.5),
+        borderRadius: BorderRadius.circular(4.0),
+      ),
+      child: Text(
+        statusText,
+        style: GoogleFonts.sourceSans3(
+            textStyle:
+                TextStyle(fontSize: 12, color: statusColor.withOpacity(1))),
+      ),
+    );
+  }
 
+  Future<List<Map<String, dynamic>>> fetchData() async {
+    final firestore = FirebaseFirestore.instance;
+    final user = FirebaseAuth.instance.currentUser;
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        body: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 12, top: 45),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    IconButton(
-                      onPressed: () => Navigator.pop(context),
-                      icon: Icon(Icons.arrow_back,
-                      size: 22,)
-                    ),
-                    const SizedBox(
-                      width: 230,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  ProfilePage(user: getCurrentUser())),
-                        );
-                      },
-                      child: CircleAvatar(
-                        radius: 25,
-                        backgroundImage: NetworkImage(
-                          'https://img.freepik.com/premium-vector/young-smiling-man-holding-pointing-blank-screen-laptop-computer-distance-elearning-education-concept-3d-vector-people-character-illustration-cartoon-minimal-style_365941-927.jpg',
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              EaseInAnimation(
-                duration: Duration(seconds: 2),
-                child: Padding(
-                  padding: EdgeInsets.only(top: 20, left:30),
-                  child: Row(
-                    children: [
-                      Flexible(
-                        child: Text(
-                          'Download Invoice !',
-                          style: GoogleFonts.abel(
-                            textStyle: const TextStyle(
-                                fontSize: 35,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w700),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 50,),
-              EaseInAnimation(
-                duration: Duration(seconds: 2),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 30.0,right: 30),
-                  child: Text('Download invoice of all the maintenance bill paid by you in PDF form for further usage.',
-                  style: GoogleFonts.abel(
-                    textStyle: TextStyle(fontSize: 20,
-                    fontWeight: FontWeight.w600)
-                  ),),
-                ),
-              ),
-              SizedBox(height: 150,),
-              ElevatedButton(
-                onPressed: () {
-                  // Replace 'userId' with the actual user ID
-                  generateAndOpenInvoice('userId', widget.selectedMonth);
-                },
-                child: Text('Generate and Open Invoice'),
-                style:ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)
-                    )
-                  )
+    if (user == null) {
+      throw Exception('No user is currently logged in');
+    }
 
-                ),
-              ),
+    try {
+      final userId = user.uid;
+      final query =
+          firestore.collection('maintenance').doc(userId).collection('records');
 
-            ],
-        )
-
-
-        );
+      final snapshot = await query.get();
+      return snapshot.docs.map((doc) => doc.data()).toList();
+    } on FirebaseException catch (error) {
+      // Handle Firestore-specific errors
+      print('Firebase error: ${error.code} - ${error.message}');
+      throw Exception('Failed to fetch data: ${error.message}');
+    } catch (error) {
+      // Handle general errors
+      print('General error: $error');
+      throw Exception('An unexpected error occurred');
+    }
   }
 }
