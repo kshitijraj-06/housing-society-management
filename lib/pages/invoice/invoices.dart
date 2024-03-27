@@ -190,17 +190,17 @@ class _InvoiceGeneratorState extends State<InvoiceGenerator> {
         body: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 16, top: 65),
+                padding: const EdgeInsets.only(left: 12, top: 45),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     IconButton(
                       onPressed: () => Navigator.pop(context),
                       icon: Icon(Icons.arrow_back,
-                      size: 30,)
+                      size: 22,)
                     ),
                     const SizedBox(
-                      width: 272,
+                      width: 230,
                     ),
                     GestureDetector(
                       onTap: () {

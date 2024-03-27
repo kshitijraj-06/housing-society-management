@@ -30,36 +30,33 @@ class NoticePage extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.only(
-          top: 65,
-          left: 16,
-          right: 16,
+          top: 45,
+          left: 12,
+          right: 12,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: const Icon(Icons.arrow_back),
-                  ),
-                ],
-              ),
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(Icons.arrow_back),
+                ),
+              ],
             ),
             EaseInAnimation(
               duration: Duration(seconds: 1),
               child: Padding(
-                padding: const EdgeInsets.only(left: 22.0),
+                padding: const EdgeInsets.only(left: 20.0),
                 child: Text(
                   'Notice Board',
                   style: GoogleFonts.abel(
                     textStyle: const TextStyle(
                       letterSpacing: .5,
-                      fontSize: 30,
+                      fontSize: 25,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -147,6 +144,7 @@ class NoticePage extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 0),
       child: Card(
         elevation: 3,
+        surfaceTintColor: Colors.green,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
@@ -155,11 +153,10 @@ class NoticePage extends StatelessWidget {
           child: ListTile(
             title: Column(
               children: [
-                Image.asset(
-                  'assets/images/ANC.png', // Replace with your asset image path
-                  width: 170, // Adjust the width as needed
-                  height: 100, // Adjust the height as needed
-                ),
+                Text("NOTICE",
+                  style: GoogleFonts.abel(
+                    textStyle : TextStyle()
+                  ),),
                 const SizedBox(height: 8),
                 Row(
                   children: [
@@ -220,10 +217,10 @@ class NoticePage extends StatelessWidget {
                 const SizedBox(height: 10),
                 Row(
                   children: [
-                    const SizedBox(width: 250),
+                    const SizedBox(width: 200),
                     IconButton(
                       color: Colors.black,
-                      icon: const Icon(Icons.thumb_up),
+                      icon: const Icon(Icons.thumb_up_off_alt_outlined),
                       onPressed: () {
                         _updateLikes(notices
                             .id);

@@ -91,27 +91,21 @@ class _SocialPageState extends State<SocialPage> {
       body: Column(
         children: [
           Padding(
-            padding: EdgeInsets.only(top: 65, left: 16),
+            padding: EdgeInsets.only(top: 45, left: 12),
             child: Row(
               children: <Widget>[
-                Icon(
-                  Icons.notifications,
-                  size: 35,
-                  color: Colors.grey,
-                ),
-                SizedBox(width: 30),
                 Text(
                   'Spring Valley Phase - 1',
                   style: GoogleFonts.abel(
                     textStyle: const TextStyle(
-                      fontSize:28,
+                      fontSize:24,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),
-                SizedBox(width: 30),
+                SizedBox(width: 60),
                 CircleAvatar(
-                  radius: 25,
+                  radius: 22,
                   backgroundImage: NetworkImage(
                       'https://img.freepik.com/premium-vector/young-smiling-man-holding-pointing-blank-screen-laptop-computer-distance-elearning-education-concept-3d-vector-people-character-illustration-cartoon-minimal-style_365941-927.jpg'), // Replace with your Firebase image URL
                 ),
@@ -159,9 +153,13 @@ Widget _buildBottomNavigationBar(BuildContext context) {
   }
   return BottomNavigationBar(
     type: BottomNavigationBarType.fixed,
-    backgroundColor: Colors.black,
-    selectedItemColor: Colors.white,
+    backgroundColor: Colors.transparent,
+    selectedItemColor: Colors.black,
     unselectedItemColor: Colors.grey,
+    iconSize: 17,
+    selectedFontSize: 12,
+    unselectedFontSize: 10,
+    elevation: 0,
     currentIndex: 1,
     items: const [
       BottomNavigationBarItem(
@@ -290,163 +288,171 @@ class _PostCardState extends State<PostCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 2),
-
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          ListTile(
-
-            leading: const CircleAvatar(
-              backgroundImage: NetworkImage(
-                  'https://img.freepik.com/premium-vector/young-smiling-man-holding-pointing-blank-screen-laptop-computer-distance-elearning-education-concept-3d-vector-people-character-illustration-cartoon-minimal-style_365941-927.jpg'), // Add user avatar URL
-            ),
-            title: Text(
-              widget.post.userName,
-              style: GoogleFonts.abel(
-                  textStyle: const TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              )),
-            ),
-            subtitle: Row(
-              children: [
-                Text(
-                  '${widget.post.block} - ${widget.post.flatNumber}',
-                  style: GoogleFonts.abel(
-                      textStyle: const TextStyle(
-                    fontWeight: FontWeight.w400,
-                    color: Colors.grey,
-                  )),
-                ),
-                const SizedBox(
-                  width: 170,
-                ),
-                Text(
-                  '${_formatTimestamp(widget.post.timestamp)}',
-                  style: GoogleFonts.abel(
-                      textStyle: const TextStyle(
-                    fontWeight: FontWeight.w400,
-                    color: Colors.grey,
-                  )),
-                ),
-              ],
-            ),
-          ),
-
-          if (widget.post.imageUrl.isNotEmpty)
-            FutureBuilder(
-              future: _getImageDimensions(widget.post.imageUrl),
-              builder: (context, AsyncSnapshot<Size> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Container(); // Placeholder or loading indicator
-                }
-
-                final imageDimensions = snapshot.data ?? const Size(1, 1);
-
-                return AspectRatio(
-                  aspectRatio: imageDimensions.aspectRatio,
-                  child: Image.network(
-                    widget.post.imageUrl,
-                    fit: BoxFit.cover,
+    return Padding(
+      padding: const EdgeInsets.only(left: 12.0, right: 12),
+      child: Card(
+        surfaceTintColor: Colors.green,
+        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 2),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ListTile(
+              leading: const CircleAvatar(
+                backgroundImage: NetworkImage(
+                    'https://img.freepik.com/premium-vector/young-smiling-man-holding-pointing-blank-screen-laptop-computer-distance-elearning-education-concept-3d-vector-people-character-illustration-cartoon-minimal-style_365941-927.jpg'), // Add user avatar URL
+              ),
+              title: Text(
+                widget.post.userName,
+                style: GoogleFonts.abel(
+                    textStyle: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                )),
+              ),
+              subtitle: Row(
+                children: [
+                  Text(
+                    '${widget.post.block} - ${widget.post.flatNumber}',
+                    style: GoogleFonts.abel(
+                        textStyle: const TextStyle(
+                      fontWeight: FontWeight.w400,
+                      color: Colors.grey,
+                    )),
                   ),
-                );
-              },
+                  const SizedBox(
+                    width: 140,
+                  ),
+                  Text(
+                    '${_formatTimestamp(widget.post.timestamp)}',
+                    style: GoogleFonts.abel(
+                        textStyle: const TextStyle(
+                      fontWeight: FontWeight.w400,
+                      color: Colors.grey,
+                    )),
+                  ),
+                ],
+              ),
             ),
 
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    LikeButton(
-                      onTap: _toggleLike,
-                      likeCount: null,
+            if (widget.post.imageUrl.isNotEmpty)
+              FutureBuilder(
+                future: _getImageDimensions(widget.post.imageUrl),
+                builder: (context, AsyncSnapshot<Size> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Container(); // Placeholder or loading indicator
+                  }
+
+                  final imageDimensions = snapshot.data ?? const Size(1, 1);
+
+                  return AspectRatio(
+                    aspectRatio: imageDimensions.aspectRatio,
+                    child: Image.network(
+                      widget.post.imageUrl,
+                      fit: BoxFit.fill,
                     ),
-                    IconButton(
-                      icon: const Icon(Icons.mode_comment_outlined),
-                      color: Colors.black,
-                      onPressed: () {
-                        _showCommentsDialog();
-                      },
-                    ),
-                    const SizedBox(width: 4),
+                  );
+                },
+              ),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      LikeButton(
+                        onTap: _toggleLike,
+                        likeCount: null,
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.mode_comment_outlined),
+                        color: Colors.black,
+                        onPressed: () {
+                          _showCommentsDialog();
+                        },
+                      ),
+                      const SizedBox(width: 4),
 
 
-                    const SizedBox(width: 4),
+                      const SizedBox(width: 4),
 
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
+
             ),
-
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0),
-            child: Text('${widget.post.likes} Likes'),
-
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0),
-            child: Text(
-              widget.post.text,
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Text('${widget.post.likes} Likes',
               style: GoogleFonts.abel(
-                textStyle: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
+                textStyle : TextStyle(
+                  fontSize: 12,
+                )
+              ),),
+
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Text(
+                widget.post.text,
+                style: GoogleFonts.abel(
+                  textStyle: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
             ),
-          ),
-          // Add Comment Input Field
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25.0),
-                      color: Colors.grey[200], // Set the background color
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: TextField(
-                        controller: _commentController,
-                        decoration: const InputDecoration(
-                          hintText: 'Add a comment...',
-                          border: InputBorder.none, // Remove the default border
+            // Add Comment Input Field
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.0),
+                        color: Colors.grey[200], // Set the background color
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: TextField(
+                          controller: _commentController,
+                          decoration: const InputDecoration(
+                            hintText: 'Add a comment...',
+                            hintStyle: TextStyle(fontSize: 15),
+                            border: InputBorder.none, // Remove the default border
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(
-                    width:
-                        10), // Add some spacing between text field and button
-                Material(
-                  color:
-                      Colors.transparent, // Match the parent container's color
-                  borderRadius: BorderRadius.circular(25.0),
-                  child: InkWell(
+                  const SizedBox(
+                      width:
+                          10), // Add some spacing between text field and button
+                  Material(
+                    color:
+                        Colors.transparent, // Match the parent container's color
                     borderRadius: BorderRadius.circular(25.0),
-                    onTap: () {
-                      _addComment();
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: Icon(Icons.send,
-                          color: Colors.black), // Customize the icon color
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(25.0),
+                      onTap: () {
+                        _addComment();
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: Icon(Icons.send,
+                            color: Colors.black), // Customize the icon color
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

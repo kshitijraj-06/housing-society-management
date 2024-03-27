@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:loading_animations/loading_animations.dart';
 import 'package:spv/pages/payment_updation.dart';
 import 'package:spv/pages/profile_page.dart';
-
 import 'invoice/invoices.dart';
 
 class SocietyPayment extends StatefulWidget {
@@ -15,12 +15,12 @@ class SocietyPayment extends StatefulWidget {
 
 class _SocietyPaymentState extends State<SocietyPayment> {
   List<Map<String, dynamic>>? _paymentData;
-  bool _fetchingData = false; // Track data fetching state for UI updates
+  bool _fetchingData = false;
 
   @override
   void initState() {
     super.initState();
-    _fetchData(); // Fetch data on initialization
+    _fetchData();
   }
 
   Future<void> _fetchData() async {
@@ -28,13 +28,12 @@ class _SocietyPaymentState extends State<SocietyPayment> {
       final data = await fetchData();
       setState(() {
         _paymentData = data;
-        _fetchingData = false; // Data fetching complete
+        _fetchingData = false;
       });
     } on Exception catch (error) {
       setState(() {
-        _fetchingData = false; // Indicate error state
+        _fetchingData = false;
       });
-      // Handle errors gracefully (display messages, retry options, etc.)
       print('Error fetching data: $error');
       throw Exception('An unexpected error occurred');
     }
@@ -49,14 +48,14 @@ class _SocietyPaymentState extends State<SocietyPayment> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 65, left: 16),
+              padding: const EdgeInsets.only(top: 45, left: 12),
               child: Row(
                 children: [
                   IconButton(
                     onPressed: () => Navigator.pop(context),
-                    icon: const Icon(Icons.arrow_back, size: 30),
+                    icon: const Icon(Icons.arrow_back, size: 25),
                   ),
-                  const SizedBox(width: 160),
+                  const SizedBox(width: 130),
                   IconButton(
                       icon: const Icon(
                         Icons.add,
@@ -66,16 +65,16 @@ class _SocietyPaymentState extends State<SocietyPayment> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => SocietyMaintenanceUpdation()));
-                      }), // Adjust spacing as needed
+                      }),
                   IconButton(
                     icon: const Icon(
                       Icons.refresh_outlined,
                     ),
                     onPressed: _fetchingData
                         ? null
-                        : _fetchData, // Disable refresh button while fetching
+                        : _fetchData,
                   ),
-                  const SizedBox(width: 20),
+                  const SizedBox(width: 10),
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -86,7 +85,7 @@ class _SocietyPaymentState extends State<SocietyPayment> {
                       );
                     },
                     child: const CircleAvatar(
-                      radius: 25,
+                      radius: 20,
                       backgroundImage: NetworkImage(
                         'https://img.freepik.com/premium-vector/young-smiling-man-holding-pointing-blank-screen-laptop-computer-distance-elearning-education-concept-3d-vector-people-character-illustration-cartoon-minimal-style_365941-927.jpg',
                       ),
@@ -95,17 +94,18 @@ class _SocietyPaymentState extends State<SocietyPayment> {
                 ],
               ),
             ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(top: 10, left: 29),
               child: Row(
                 children: [
                   Text(
                     'Society Maintenance',
-                    style: TextStyle(
-                      fontSize: 30,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w700,
-                    ),
+                    style: GoogleFonts.abel(
+                        textStyle: TextStyle(
+                          fontSize: 30,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w700,
+                        ), )
                   ),
                 ],
               ),
@@ -125,8 +125,7 @@ class _SocietyPaymentState extends State<SocietyPayment> {
             SizedBox(
               height: 30,
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 150),
+            Center(
               child: ElevatedButton.icon(
                 onPressed: () {
                   Navigator.push(

@@ -23,21 +23,18 @@ class _NoticeCreationPageState extends State<NoticeCreationPage> {
             ),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: const Icon(Icons.arrow_back),
-                    ),
-                  ],
-                ),
+              Row(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.arrow_back),
+                  ),
+                ],
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 22.0),
+                padding: const EdgeInsets.only(left: 20.0),
                 child: Text(
                   'Add Announcement',
                   style: GoogleFonts.abel(

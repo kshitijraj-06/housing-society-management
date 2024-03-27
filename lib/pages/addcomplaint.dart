@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:io';
-import 'package:image_picker/image_picker.dart';
 
 class AddComplaintPage extends StatefulWidget {
   @override
@@ -14,7 +13,6 @@ class AddComplaintPage extends StatefulWidget {
 class _AddComplaintPageState extends State<AddComplaintPage> {
   TextEditingController _complaintController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
-  File? _image;
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -30,43 +28,44 @@ class _AddComplaintPageState extends State<AddComplaintPage> {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.only(left: 12.0),
           child: Form(
             key: _formKey, // Set form key
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 55),
+                  padding: const EdgeInsets.only(top: 45),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconButton(
                         icon: const Icon(
                           Icons.arrow_back,
-                          size: 30,
+                          size: 24,
                         ),
                         onPressed: () => Navigator.pop(context),
                       ),
                     ],
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 20, left: 15),
+                Padding(
+                  padding: EdgeInsets.only(top: 5, left: 12),
                   child: Row(
                     children: [
                       EaseInAnimation(
-                        duration : Duration(seconds : 1),
-                        child: Text(
-                          'Add Complaint',
-                          style:
-                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                        ),
+                        duration: Duration(seconds: 1),
+                        child: Text('Add Complaint',
+                            style: GoogleFonts.abel(
+                              textStyle: TextStyle(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold),
+                            )),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.only(left: 15),
                   child: EaseInAnimation(
@@ -76,8 +75,8 @@ class _AddComplaintPageState extends State<AddComplaintPage> {
                       style: GoogleFonts.abel(
                         textStyle: const TextStyle(
                           letterSpacing: .5,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
@@ -90,14 +89,14 @@ class _AddComplaintPageState extends State<AddComplaintPage> {
                   duration: Duration(seconds: 1),
                   child: TextFormField(
                     controller: _complaintController,
-                    decoration: new InputDecoration(
+                    decoration: InputDecoration(
                       labelText: "Enter Complaint",
                       fillColor: Colors.white,
-                      border: new OutlineInputBorder(
-                        borderRadius: new BorderRadius.circular(25.0),
-                        borderSide: new BorderSide(),
+                      focusColor: Colors.green,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                        borderSide: BorderSide(),
                       ),
-                      //fillColor: Colors.green
                     ),
                     validator: (val) {
                       if (val!.isEmpty) {
@@ -119,8 +118,8 @@ class _AddComplaintPageState extends State<AddComplaintPage> {
                       style: GoogleFonts.abel(
                         textStyle: const TextStyle(
                           letterSpacing: .5,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
@@ -134,12 +133,12 @@ class _AddComplaintPageState extends State<AddComplaintPage> {
                   child: TextFormField(
                     controller: _descriptionController,
                     maxLines: 4,
-                    decoration: new InputDecoration(
+                    decoration: InputDecoration(
                       labelText: "Enter Description",
                       fillColor: Colors.white,
-                      border: new OutlineInputBorder(
-                        borderRadius: new BorderRadius.circular(25.0),
-                        borderSide: new BorderSide(),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                        borderSide: BorderSide(),
                       ),
                       //fillColor: Colors.green
                     ),
@@ -154,28 +153,25 @@ class _AddComplaintPageState extends State<AddComplaintPage> {
                   ),
                 ),
                 SizedBox(height: 50),
-                Padding(
-                  padding: const EdgeInsets.only(left:96.0),
-                  child: EaseInAnimation(
-                    duration: Duration(seconds: 1),
+                EaseInAnimation(
+                  duration: Duration(seconds: 1),
+                  child: Center(
                     child: ElevatedButton.icon(
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          // Check if form is valid
                           String complaint = _complaintController.text;
                           String description = _descriptionController.text;
-                          // Rest of your code to submit complaint
-                          // Get the current user's ID
+
                           User? user = FirebaseAuth.instance.currentUser;
                           String? userId = user?.uid;
 
                           if (userId != null) {
                             // Retrieve user information from Firestore
-                            DocumentSnapshot userSnapshot = await FirebaseFirestore
-                                .instance
-                                .collection('users')
-                                .doc(userId)
-                                .get();
+                            DocumentSnapshot userSnapshot =
+                                await FirebaseFirestore.instance
+                                    .collection('users')
+                                    .doc(userId)
+                                    .get();
 
                             if (userSnapshot.exists) {
                               String name = userSnapshot['name'];
@@ -193,14 +189,14 @@ class _AddComplaintPageState extends State<AddComplaintPage> {
                                   'block': block,
                                   'flatNumber': flatNumber,
                                   'status':
-                                  'unresolved', // Set default status to 'unresolved'
+                                      'unresolved', // Set default status to 'unresolved'
                                   'timestamp': FieldValue.serverTimestamp(),
                                   'userId': userId,
                                 });
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                    content:
-                                    Text('Complaint submitted successfully!'),
+                                    content: Text(
+                                        'Complaint submitted successfully!'),
                                     backgroundColor: Colors.green,
                                   ),
                                 );
@@ -228,11 +224,20 @@ class _AddComplaintPageState extends State<AddComplaintPage> {
                         }
                       },
                       icon: Icon(Icons.send),
-                      label: Text('Submit Complaint'),
+                      label: Text('Submit Complaint',
+                      style: GoogleFonts.abel(
+                        textStyle: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700
+                        )
+                      ),),
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(Colors.black), // Change background color
-                        foregroundColor: MaterialStateProperty.all<Color>(Colors.white), // Change text color
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            Colors.black), // Change background color
+                        foregroundColor: MaterialStateProperty.all<Color>(
+                            Colors.white), // Change text color
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(18.0),
                             // You can adjust the border radius as needed
@@ -242,7 +247,6 @@ class _AddComplaintPageState extends State<AddComplaintPage> {
                     ),
                   ),
                 )
-
               ],
             ),
           ),

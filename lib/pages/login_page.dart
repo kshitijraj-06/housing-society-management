@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:local_auth/local_auth.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -13,7 +12,6 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
-
   Future<void> _handleLogin(BuildContext context) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -22,18 +20,14 @@ class _LoginPageState extends State<LoginPage> {
       );
 
       if (FirebaseAuth.instance.currentUser != null) {
-        // Login successful
         print("User logged in: ${FirebaseAuth.instance.currentUser!.uid}");
 
         Navigator.pushReplacementNamed(context, '/dashboard');
       } else {
-        // Handle login errors here
         print("Error: Failed to log in");
       }
     } on FirebaseAuthException catch (e) {
-      // Handle specific Firebase Auth errors
       print("Error: ${e.message}");
-      // Display error message to the user
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Error: ${e.message}'),
@@ -41,11 +35,9 @@ class _LoginPageState extends State<LoginPage> {
         ),
       );
     } catch (e) {
-      // Handle other errors
       print("Error: $e");
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +47,6 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           children: [
             const SizedBox(height: 25),
-            // App logo and greetings
             Image.asset('assets/images/logo.png'),
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 10.0),
@@ -160,11 +151,11 @@ class _LoginPageState extends State<LoginPage> {
                     _handleLogin(context);
                   },
                   style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(500, 50),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(13.0)),
-                    backgroundColor: Colors.black,
-                  ),
+                      minimumSize: const Size(500, 50),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(13.0)),
+                      backgroundColor: Colors.black,
+                      foregroundColor: Colors.white),
                   child: const Text(
                     'Continue',
                     style: TextStyle(
@@ -181,4 +172,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-

@@ -3,8 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-
 
 class PostCreationPage extends StatefulWidget {
   @override
@@ -18,8 +18,10 @@ class _PostCreationPageState extends State<PostCreationPage> {
 
   Future<Map<String, dynamic>> _fetchUserData(String userId) async {
     try {
-      final userDoc =
-      await FirebaseFirestore.instance.collection('users').doc(userId).get();
+      final userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .get();
 
       if (userDoc.exists) {
         return userDoc.data() as Map<String, dynamic>;
@@ -48,8 +50,9 @@ class _PostCreationPageState extends State<PostCreationPage> {
 
       // Upload image to Firebase Storage if available
       if (_image != null) {
-        final storageReference =
-        FirebaseStorage.instance.ref().child('images/${DateTime.now()}.png');
+        final storageReference = FirebaseStorage.instance
+            .ref()
+            .child('images/${DateTime.now()}.png');
         await storageReference.putFile(_image!);
         imageUrl = await storageReference.getDownloadURL();
       }
@@ -94,53 +97,72 @@ class _PostCreationPageState extends State<PostCreationPage> {
             onPressed: () => _createPost(context),
             child: Text('Share'),
             style: ElevatedButton.styleFrom(
-              foregroundColor: Colors.black, backgroundColor: Colors.white,
+              foregroundColor: Colors.black,
+              backgroundColor: Colors.white,
+              elevation: 0,
             ),
           ),
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              controller: _postController,
-              maxLines: 4,
-              style: const TextStyle(fontSize: 18),
-              decoration: const InputDecoration(
-                hintText: 'Write your caption...',
-                border: InputBorder.none,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _image != null
+                ? Container(
+                    height: 200,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: FileImage(_image!),
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  )
+                : Container(),
+            SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: TextField(
+                controller: _postController,
+                maxLines: 4,
+                style: const TextStyle(fontSize: 18),
+                decoration: InputDecoration(
+                  hintText: 'Write your caption...',
+                  hintStyle: GoogleFonts.abel(
+                      textStyle: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                  )),
+                  border: InputBorder.none,
+                ),
               ),
             ),
-          ),
-          _image != null
-              ? Container(
-            height: 200,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: FileImage(_image!),
-                fit: BoxFit.cover,
+            SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: ElevatedButton.icon(
+                onPressed: _pickImage,
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(5200, 50),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(13.0)),
+                  backgroundColor: Colors.black,
+                ),
+                icon: const Icon(Icons.photo,
+                color: Colors.white,),
+                label: Text('Add Photo',
+                style: GoogleFonts.abel(
+                  textStyle : TextStyle(
+                    fontSize: 15,
+                    color: Colors.white
+                  )
+                ),),
               ),
             ),
-          )
-              : Container(),
-          SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: ElevatedButton.icon(
-              onPressed: _pickImage,
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(5200, 50),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(13.0)),
-                backgroundColor: Colors.black,
-              ),
-              icon: const Icon(Icons.photo),
-              label: const Text('Add Photo'),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

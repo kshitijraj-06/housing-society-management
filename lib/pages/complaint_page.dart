@@ -80,43 +80,33 @@ class _ComplaintDetailPageState extends State<ComplaintDetailPage> {
         return Scaffold(
           backgroundColor: Colors.white,
           body: Padding(
-            padding: const EdgeInsets.only(top: 45,
-              left: 16,
-              right: 16,),
+            padding: const EdgeInsets.only(top :45 ,left: 9),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: const Icon(Icons.arrow_back),
-                      ),
-                      const SizedBox(width: 35),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
+                Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(Icons.arrow_back),
+                    ),
+                  ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 22.0),
+                  padding: const EdgeInsets.only(left: 20.0),
                   child: Text(
                     widget.complaint,
                     style: GoogleFonts.abel(
                       textStyle: const TextStyle(
                         letterSpacing: .5,
-                        fontSize: 30,
+                        fontSize: 27,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 6.5),
                 const SizedBox(height: 6.5),
                 Padding(
                   padding: const EdgeInsets.only(left: 22.0),
@@ -124,13 +114,13 @@ class _ComplaintDetailPageState extends State<ComplaintDetailPage> {
                     widget.description,
                     style: GoogleFonts.abel(
                         textStyle: const TextStyle(
+                          letterSpacing: 0,
                           fontSize: 22,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w500,
                         )),
                   ),
                 ),
                 const SizedBox(height: 12),
-
                 const SizedBox(height: 12),
                 FutureBuilder(
                   future: _getUserName(getCurrentUserUid()),
@@ -149,7 +139,7 @@ class _ComplaintDetailPageState extends State<ComplaintDetailPage> {
                             textStyle: const TextStyle(
                                 fontSize: 18,
                                 color: Colors.grey,
-                                fontWeight: FontWeight.w700
+                                fontWeight: FontWeight.w400
                             ),
                           ),
                         ));
@@ -168,49 +158,15 @@ class _ComplaintDetailPageState extends State<ComplaintDetailPage> {
                           borderRadius: BorderRadius.circular(13.0)),
                       backgroundColor: Colors.black,
                     ),
-                    icon: const Icon(Icons.thumb_up),
-                    label: const Text('Mark as Resolved'),
+                    icon: const Icon(Icons.thumb_up,
+                    color: Colors.white,),
+                    label: const Text('Mark as Resolved',
+                    style: TextStyle(
+                      color: Colors.white
+                    ),),
                   ),
                 ),
                 const SizedBox(height: 30),
-
-                
-                // FutureBuilder(
-                //   future: _getComplaintPhotos(),
-                //   builder: (context, snapshot) {
-                //     if (snapshot.connectionState == ConnectionState.waiting) {
-                //       return _buildLoadingIndicator();
-                //     }
-                //
-                //     if (snapshot.hasError) {
-                //       return Text('Error: ${snapshot.error}');
-                //     }
-                //
-                //     List<String> imageUrl = snapshot.data as List<String>;
-                //     print(imageUrl);
-                //
-                //     return SizedBox(
-                //       height: 100,
-                //       child: ListView.builder(
-                //         scrollDirection: Axis.horizontal,
-                //         itemCount: imageUrl.length,
-                //         itemBuilder: (context, index) {
-                //           return Padding(
-                //             padding: const EdgeInsets.all(8.0),
-                //             child: Image.network(
-                //               imageUrl[index],
-                //               width: 100,
-                //               height: 100,
-                //               fit: BoxFit.cover,
-                //             ),
-                //           );
-                //         },
-                //       ),
-                //     );
-                //   },
-                // ),
-
-                const SizedBox(height: 22),
                 Padding(
                   padding: const EdgeInsets.only(left: 22.0),
                   child: Text('Comments:',
@@ -254,26 +210,31 @@ class _ComplaintDetailPageState extends State<ComplaintDetailPage> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: _commentController,
-                        decoration: const InputDecoration(
-                          hintText: 'Add a comment...',
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0 ,right: 8),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: _commentController,
+                          decoration: const InputDecoration(
+                            hintText: 'Add a comment...',
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 8),
-                    ElevatedButton.icon(
-                      onPressed: _addComment,
-                      icon: const Icon(Icons.send),
-                      label: const Text('Add Comment'),
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.black
+                      const SizedBox(width: 8),
+                      ElevatedButton.icon(
+                        onPressed: _addComment,
+                        icon: const Icon(Icons.send),
+                        label: const Text('Add Comment'),
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black,
+                            fixedSize: Size(170, 20),
+                          foregroundColor: Colors.white
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),

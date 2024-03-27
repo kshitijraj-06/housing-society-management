@@ -14,20 +14,31 @@ class HelpDeskPage extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 65, left: 16),
+           Padding(
+            padding: EdgeInsets.only(top :45 ,left: 7),
             child: Row(
               children: [
                 IconButton(
                   icon: const Icon(
                     Icons.arrow_back,
-                    size: 30,
+                    size: 24,
                   ),
                   onPressed: () => Navigator.pop(context),
                 ),
-                const SizedBox(
-                  width: 272,
+                SizedBox(width: 10,),
+                EaseInAnimation(
+                  duration : Duration(seconds: 1),
+                  child: Text(
+                    'HelpDesk',
+                    style: GoogleFonts.abel(
+                      textStyle: const TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
                 ),
+                SizedBox(width: 140),
                 IconButton(
                     onPressed: () {
                       Navigator.push(
@@ -37,33 +48,10 @@ class HelpDeskPage extends StatelessWidget {
                         ),
                       );
                     },
-                    icon: const Icon(Icons.add))
+                    icon: const Icon(Icons.add)),
               ],
             ),
           ),
-           Padding(
-            padding: EdgeInsets.only(top: 20, left: 29),
-            child: Row(
-              children: [
-                EaseInAnimation(
-                  duration : Duration(seconds: 1),
-                  child: Text(
-                    'HelpDesk',
-                    style: GoogleFonts.abel(
-                      textStyle: const TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(width: 190),
-                Icon(Icons.filter_list_outlined),
-              ],
-            ),
-          ),
-
-          // Fetch data from Firestore and display in card items
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
@@ -101,19 +89,19 @@ class HelpDeskPage extends StatelessWidget {
   Widget _buildComplaintCard(BuildContext context, DocumentSnapshot complaint) {
     String status = complaint['status'] ?? 'unresolved';
 
-    // Define network image URLs for different statuses
     String imagePath = '';
-    double imageSize = 140.0;
+
     if (status == 'resolved') {
-      imagePath = 'assets/images/RESOLVED.png';
+      imagePath = 'assets/images/RESOLVED.gif';
     } else {
-      imagePath = 'assets/images/NEW.png';
+      imagePath = 'assets/images/NEW.gif';
     }
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: EaseInAnimation(
         child: Card(
           elevation: 3,
+          surfaceTintColor: Colors.green,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
           ),
@@ -123,7 +111,7 @@ class HelpDeskPage extends StatelessWidget {
               style: GoogleFonts.abel(
                 textStyle: const TextStyle(
                   letterSpacing: .5,
-                  fontSize: 25,
+                  fontSize: 22,
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -137,7 +125,7 @@ class HelpDeskPage extends StatelessWidget {
                   style: GoogleFonts.abel(
                     textStyle: const TextStyle(
                       fontSize: 18,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
@@ -146,8 +134,8 @@ class HelpDeskPage extends StatelessWidget {
                   'Raised by: ${complaint['name']}',
                   style: GoogleFonts.abel(
                     textStyle: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w700,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
@@ -155,8 +143,8 @@ class HelpDeskPage extends StatelessWidget {
                   'Block: ${complaint['block']}',
                   style: GoogleFonts.abel(
                     textStyle: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w700,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
@@ -164,8 +152,8 @@ class HelpDeskPage extends StatelessWidget {
                   'Flat Number: ${complaint['flatNumber']}',
                   style: GoogleFonts.abel(
                     textStyle: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w700,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
@@ -186,9 +174,7 @@ class HelpDeskPage extends StatelessWidget {
             },
             trailing: Image.asset(
               imagePath,
-              width: imageSize,
-              height: imageSize,
-              fit: BoxFit.fill,
+              alignment: Alignment.topRight,
             ),
           ),
         ),

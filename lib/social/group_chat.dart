@@ -51,28 +51,22 @@ class _ChatScreenState extends State<ChatScreen> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top:65.0, left: 16),
+            padding: const EdgeInsets.only(top:45.0, left: 12),
             child: Row(
               children: [
-                Icon(
-                  Icons.notifications,
-                  size: 30,
-                  color: Colors.grey,
-                ),
-                SizedBox(width: 30),
                 EaseInAnimation(
                   duration: Duration(seconds: 1),
                   child: Text(
                     'Spring Valley Phase - 1',
                     style: GoogleFonts.abel(
                       textStyle: const TextStyle(
-                        fontSize:28,
+                        fontSize:24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                 ),
-                SizedBox(width: 30),
+                SizedBox(width:50),
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -164,6 +158,11 @@ class _ChatScreenState extends State<ChatScreen> {
                         controller: _messageController,
                         decoration: InputDecoration(
                           hintText: 'Type your message...',
+                          hintStyle: GoogleFonts.abel(
+                            textStyle: TextStyle(
+                              fontSize: 15,
+                            )
+                          ),
                           border: InputBorder.none,
                         ),
                       ),

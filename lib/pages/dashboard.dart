@@ -3,10 +3,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loading_animations/loading_animations.dart';
+import 'package:spv/pages/add_delivery.dart';
+import 'package:spv/pages/add_guests.dart';
 import 'package:spv/pages/notice.dart';
 import 'package:spv/pages/service.dart';
 import 'package:spv/pages/social.dart';
 import 'package:spv/pages/society_payment.dart';
+import 'add_cab.dart';
 import 'helpdesk.dart';
 import 'profile_page.dart';
 import 'package:animated_flutter_widgets/animated_widgets.dart';
@@ -59,7 +62,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(top: 65, left: 16),
+                    padding: EdgeInsets.only(top: 35, left: 12),
                     child: Row(
                       children: [
                         Icon(
@@ -67,20 +70,22 @@ class _DashboardPageState extends State<DashboardPage> {
                           size: 30,
                           color: Colors.grey,
                         ),
-                        SizedBox(width: 30),
+                        SizedBox(width: 20),
                         EaseInAnimation(
                           duration: Duration(seconds: 1),
-                          child: Text(
-                            'Spring Valley Phase - 1',
-                            style: GoogleFonts.abel(
-                              textStyle: const TextStyle(
-                                fontSize:28,
-                                fontWeight: FontWeight.bold,
+                          child: Center(
+                            child: Text(
+                              'Spring Valley Phase - 1',
+                              style: GoogleFonts.abel(
+                                textStyle: const TextStyle(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                        SizedBox(width: 30),
+                        SizedBox(width: 20),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -91,7 +96,7 @@ class _DashboardPageState extends State<DashboardPage> {
                             );
                           },
                           child: CircleAvatar(
-                            radius: 25,
+                            radius: 23,
                             backgroundImage: NetworkImage(
                               'https://img.freepik.com/premium-vector/young-smiling-man-holding-pointing-blank-screen-laptop-computer-distance-elearning-education-concept-3d-vector-people-character-illustration-cartoon-minimal-style_365941-927.jpg',
                             ),
@@ -102,7 +107,7 @@ class _DashboardPageState extends State<DashboardPage> {
                   ),
 
                   const SizedBox(
-                    height: 40,
+                    height: 20,
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 18),
@@ -112,7 +117,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         'Pre - Approve Visitors',
                         style: GoogleFonts.abel(
                           textStyle: const TextStyle(
-                            fontSize: 25,
+                            fontSize: 22,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -120,7 +125,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     ),
                   ),
                   const SizedBox(
-                    height: 6,
+                    height: 3,
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 18),
@@ -130,7 +135,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         'Add Visitors Details for Quick Entries.',
                         style: GoogleFonts.abel(
                           textStyle: const TextStyle(
-                            fontSize: 18,
+                            fontSize: 14,
                             fontWeight: FontWeight.w700,
                             color: Colors.grey,
                           ),
@@ -140,7 +145,7 @@ class _DashboardPageState extends State<DashboardPage> {
                   ),
                   const SizedBox(
                       height:
-                          16), // Add spacing between the text and the card items
+                          13), // Add spacing between the text and the card items
                   SizedBox(
                     height: 150, // Adjust the height as needed
                     child: EaseInAnimation(
@@ -151,77 +156,43 @@ class _DashboardPageState extends State<DashboardPage> {
                           _buildClickableCard(
                             'Add Guests',
                             Icons.people,
-                            Colors.blue,
+                            Colors.black,
                             () {
-                              // Handle click for Add Guests
-                              if (kDebugMode) {
-                                print('Add Guests Clicked');
-                              }
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content:
-                                  Text('Not available right now !!'),
-                                ),
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AddGuests(
+                                          user: getCurrentUser(),
+                                        )),
                               );
                             },
                           ),
+                          _buildClickableCard('Add Delivery',
+                              Icons.local_shipping, Colors.green, () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AddDelivery(
+                                        user: getCurrentUser(),
+                                      )),
+                            );
+                          }),
                           _buildClickableCard(
-                            'Add Delivery',
-                            Icons.local_shipping,
-                            Colors.green,
-                            () {
-                              // Handle click for Add Delivery
-                              if (kDebugMode) {
-                                print('Add Delivery Clicked');
-                              }
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content:
-                                  Text('Not available right now !!'),
-                                ),
-                              );
-                            },
-                          ),
-                          _buildClickableCard(
-                            'Add Service',
-                            Icons.build,
-                            Colors.orange,
-                            () {
-                              // Handle click for Add Service
-                              if (kDebugMode) {
-                                print('Add Service Clicked');
-                              }
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content:
-                                  Text('Not available right now !!'),
-                                ),
-                              );
-                            },
-                          ),
-                          _buildClickableCard(
-                            'Add Cab',
-                            Icons.directions_car,
-                            Colors.red,
-                            () {
-                              // Handle click for Add Cab
-                              if (kDebugMode) {
-                                print('Add Cab Clicked');
-                              }
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content:
-                                  Text('Not available right now !!'),
-                                ),
-                              );
-                            },
-                          ),
+                              'Add Cab', Icons.directions_car, Colors.red, () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AddCab(
+                                        user: getCurrentUser(),
+                                      )),
+                            );
+                          }),
                         ],
                       ),
                     ),
                   ),
                   const SizedBox(
-                    height: 40,
+                    height: 15,
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 18),
@@ -231,7 +202,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         'Community',
                         style: GoogleFonts.abel(
                           textStyle: const TextStyle(
-                            fontSize: 25,
+                            fontSize: 22,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -239,7 +210,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     ),
                   ),
                   const SizedBox(
-                    height: 6,
+                    height: 3,
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 18),
@@ -249,7 +220,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         'Everything for Spring Valley Phase - I',
                         style: GoogleFonts.abel(
                           textStyle: const TextStyle(
-                            fontSize: 18,
+                            fontSize: 14,
                             fontWeight: FontWeight.w700,
                             color: Colors.grey,
                           ),
@@ -259,6 +230,7 @@ class _DashboardPageState extends State<DashboardPage> {
                   ),
 
                   Container(
+                    alignment: AlignmentDirectional.topStart,
                     padding: const EdgeInsets.only(bottom: 20),
                     child: EaseInAnimation(
                       duration: Duration(seconds: 1),
@@ -278,9 +250,13 @@ class _DashboardPageState extends State<DashboardPage> {
             ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.black,
-        selectedItemColor: Colors.white,
+        backgroundColor: Colors.transparent,
+        selectedItemColor: Colors.black,
         unselectedItemColor: Colors.grey,
+        iconSize: 17,
+        selectedFontSize: 12,
+        unselectedFontSize: 10,
+        elevation: 0,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.horizontal_split_rounded),
@@ -322,7 +298,7 @@ class _DashboardPageState extends State<DashboardPage> {
     ];
 
     List<String> imageUrls = [
-      'https://cdn.vectorstock.com/i/preview-1x/09/51/portrait-confused-anime-boy-with-question-mark-vector-34070951.jpg',
+      'https://th.bing.com/th/id/OIG3.fuZsMt4l_foOATKohnfn?w=1024&h=1024&rs=1&pid=ImgDetMain',
       'https://img.freepik.com/premium-vector/3d-realistic-megaphone-white-background-concept-join-us-job-vacancy-announcement-modern-3d-cartoon-style-design-3d-vector-illustration_145666-1533.jpg?w=2000',
       'https://img.freepik.com/free-vector/bill-receipt-credit-card-3d-illustration-cartoon-drawing-paper-sheet-with-dollar-symbol-credit-card-3d-style-white-background-business-payment-finances-transaction-concept_778687-705.jpg',
       'https://img.freepik.com/premium-vector/calendar-reminder-date-spiral-icon-red-circle-style-simple-calendar-mark-date-holiday-important-day-concepts-vector-illustration-flat-style_165488-4093.jpg',
@@ -349,14 +325,12 @@ class _DashboardPageState extends State<DashboardPage> {
           // Add more cases as needed
           case 'Society Payment':
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => SocietyPayment())
-            );
+                MaterialPageRoute(builder: (context) => SocietyPayment()));
             break;
-          case 'Book Amenities' :
+          case 'Book Amenities':
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content:
-                Text('Will be added soon !! '),
+                content: Text('Will be added soon !! '),
               ),
             );
           default:
@@ -378,11 +352,10 @@ class _DashboardPageState extends State<DashboardPage> {
                     titles[index % titles.length],
                     style: GoogleFonts.abel(
                       textStyle: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black,
-                        letterSpacing: 0.3
-                      ),
+                          fontSize: 17,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black,
+                          letterSpacing: 0.3),
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -390,7 +363,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     descriptions[index % descriptions.length],
                     style: GoogleFonts.abel(
                       textStyle: const TextStyle(
-                        fontSize: 15,
+                        fontSize: 13,
                         fontWeight: FontWeight.w700,
                         color: Colors.grey,
                         letterSpacing: 0.4,
@@ -423,19 +396,25 @@ class _DashboardPageState extends State<DashboardPage> {
         padding: const EdgeInsets.all(8.0),
         child: Card(
           elevation: 3,
+          surfaceTintColor: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: SizedBox(
-            width: 120, // Adjust the width as needed
-            height: 120, // Adjust the height as needed
+            width: 110,
+            height: 150,
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(icon, size: 30, color: color),
+                  Icon(icon, size: 40, color: color),
                   const SizedBox(height: 8),
-                  Text(title),
+                  Text(
+                    title,
+                    style: GoogleFonts.abel(
+                        textStyle: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.w600)),
+                  ),
                 ],
               ),
             ),
